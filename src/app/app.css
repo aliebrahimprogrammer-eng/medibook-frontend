@@ -325,4 +325,10 @@
     gap: 10px;
     font-size: 10px;
   }
+  .success-message {
+    margin: 0 0 14px;
+    color: #087f65;
+    font-size: 12px;
+    line-height: 1.5;
+  }
 }

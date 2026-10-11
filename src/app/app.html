@@ -76,9 +76,21 @@
         @if (errorMessage) {
           <p class="form-message" role="alert">{{ errorMessage }}</p>
         }
+        @if (successMessage) {
+          <p class="success-message" role="status">
+            {{ successMessage }}
+          </p>
+        }
 
-        <button pButton type="submit" class="login-button">
-          <span pButtonLabel>Sign in</span>
+        <button
+          pButton
+          type="submit"
+          class="login-button"
+          [disabled]="isLoading"
+        >
+          <span pButtonLabel>
+            {{ isLoading ? 'Signing in...' : 'Sign in' }}
+          </span>
           <span class="button-arrow">→</span>
         </button>
       </form>
