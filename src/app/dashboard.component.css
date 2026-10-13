@@ -1,0 +1,100 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f7fafc;
+  color: #183b4b;
+}
+
+.dashboard {
+  min-height: 100vh;
+}
+
+.topbar {
+  min-height: 76px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid #e7eeee;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #173e4b;
+  font-size: 22px;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background: #087f8c;
+  color: white;
+  font-size: 28px;
+}
+
+.logout-button {
+  padding: 10px 17px;
+  border: 1px solid #dce6e9;
+  border-radius: 9px;
+  background: white;
+  color: #345461;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background: #f0f7f7;
+}
+
+.content {
+  width: min(1000px, 88%);
+  margin: 55px auto;
+}
+
+.eyebrow {
+  color: #087f8c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+h1 {
+  margin: 14px 0;
+  font-size: clamp(30px, 4vw, 42px);
+  letter-spacing: -1.2px;
+}
+
+.subtitle {
+  color: #71848d;
+}
+
+.welcome-card {
+  margin-top: 35px;
+  padding: 30px;
+  border: 1px solid #e7eeee;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 12px 35px rgba(27, 69, 79, 0.05);
+}
+
+.welcome-card h2 {
+  margin-top: 0;
+}
+
+.welcome-card p {
+  color: #71848d;
+  line-height: 1.7;
+}
+
+.welcome-card .coming-soon {
+  margin-top: 24px;
+  font-size: 13px;
+}

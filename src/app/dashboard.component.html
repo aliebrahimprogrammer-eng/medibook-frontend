@@ -1,0 +1,53 @@
+
+<div class="dashboard">
+  <header class="topbar">
+    <a class="brand" routerLink="/">
+      <span class="brand-icon">+</span>
+      MediBook
+    </a>
+
+    <button class="logout-button" type="button" (click)="logout()">
+      Sign out
+    </button>
+  </header>
+
+  <main class="content">
+    @if (isLoading()) {
+      <p>Loading your profile...</p>
+    } @else if (profile(); as user) {
+      <p class="eyebrow">{{ user.role }} PORTAL</p>
+
+      <h1>Welcome back, {{ user.firstName }}!</h1>
+      <p class="subtitle">Signed in as {{ user.email }}.</p>
+
+      @if (user.role === 'PATIENT') {
+        <section class="welcome-card">
+          <h2>Your healthcare, in one place</h2>
+          <p>Find a doctor and manage your appointments.</p>
+          <p class="coming-soon">Appointment features are coming next.</p>
+        </section>
+      }
+
+      @if (user.role === 'DOCTOR') {
+        <section class="welcome-card">
+          <h2>Your doctor workspace</h2>
+          <p>Manage availability and review your appointments.</p>
+          <p class="coming-soon">Doctor features are coming next.</p>
+        </section>
+      }
+
+      @if (user.role === 'ADMIN') {
+        <section class="welcome-card">
+          <h2>Administration</h2>
+          <p>Manage users and review system activity.</p>
+          <p class="coming-soon">Admin features are coming next.</p>
+        </section>
+      }
+    } @else {
+      <p role="alert">{{ errorMessage() }}</p>
+      <button class="logout-button" type="button" (click)="logout()">
+        Return to login
+      </button>
+    }
+  </main>
+</div>
