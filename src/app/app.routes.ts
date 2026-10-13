@@ -1,14 +1,20 @@
-
 import { Routes } from '@angular/router';
 
 import { LoginComponent } from './login.component';
 import { DashboardComponent } from './dashboard.component';
+import { DoctorsComponent } from './doctors.component';
 import { roleGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'patient/doctors',
+    component: DoctorsComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['PATIENT'] },
   },
   {
     path: 'patient',

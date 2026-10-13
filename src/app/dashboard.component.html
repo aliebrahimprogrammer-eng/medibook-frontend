@@ -21,10 +21,16 @@
       <p class="subtitle">Signed in as {{ user.email }}.</p>
 
       @if (user.role === 'PATIENT') {
+        
         <section class="welcome-card">
-          <h2>Your healthcare, in one place</h2>
-          <p>Find a doctor and manage your appointments.</p>
-          <p class="coming-soon">Appointment features are coming next.</p>
+        <h2>Your healthcare, in one place</h2>
+        <p>Find a doctor and manage your appointments.</p>
+
+        <a class="dashboard-link" routerLink="/patient/doctors">
+            Find a doctor →
+        </a>
+
+        <p class="coming-soon">Appointment booking is coming next.</p>
         </section>
       }
 

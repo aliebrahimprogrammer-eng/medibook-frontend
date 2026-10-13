@@ -98,3 +98,14 @@ h1 {
   margin-top: 24px;
   font-size: 13px;
 }
+.dashboard-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 18px;
+  border-radius: 9px;
+  background: #087f8c;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
