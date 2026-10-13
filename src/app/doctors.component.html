@@ -28,16 +28,35 @@
         />
       </div>
 
-      <div class="field">
+      
+        <div class="field">
         <label for="specialization">Specialization</label>
-        <input
-          id="specialization"
-          name="specialization"
-          type="text"
-          [(ngModel)]="searchSpecialization"
-          placeholder="e.g. Cardiology"
-        />
-      </div>
+
+        <select
+            id="specialization"
+            name="specialization"
+            [(ngModel)]="searchSpecialization"
+            (ngModelChange)="search()"
+            [disabled]="isLoadingSpecializations()"
+        >
+            <option value="">All specializations</option>
+
+            @for (specialization of specializations(); track specialization.id) {
+            <option [value]="specialization.name">
+                {{ specialization.name }}
+            </option>
+            }
+        </select>
+
+        @if (isLoadingSpecializations()) {
+            <small>Loading specializations...</small>
+        }
+
+        @if (specializationError()) {
+            <small class="error-message">{{ specializationError() }}</small>
+        }
+        </div>
+
 
       <button class="search-button" type="submit" [disabled]="isLoading()">
         {{ isLoading() ? 'Searching...' : 'Search doctors' }}

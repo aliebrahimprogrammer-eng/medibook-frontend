@@ -90,7 +90,8 @@ h1 {
   font-weight: 700;
 }
 
-.field input {
+.field input,
+.field select {
   width: 100%;
   min-height: 44px;
   padding: 0 12px;
@@ -99,9 +100,12 @@ h1 {
   outline: none;
   font: inherit;
   font-size: 13px;
+  background: white;
+  color: #183b4b;
 }
 
-.field input:focus {
+.field input:focus,
+.field select:focus {
   border-color: #087f8c;
   box-shadow: 0 0 0 3px #087f8c18;
 }
@@ -287,4 +291,5 @@ h1 {
   .doctor-card {
     padding: 20px;
   }
+  
 }
