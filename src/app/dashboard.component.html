@@ -20,19 +20,39 @@
       <h1>Welcome back, {{ user.firstName }}!</h1>
       <p class="subtitle">Signed in as {{ user.email }}.</p>
 
-      @if (user.role === 'PATIENT') {
-        
-        <section class="welcome-card">
+    
+@if (user.role === 'PATIENT') {
+  <section class="welcome-card">
+    <div class="welcome-heading">
+      <div class="welcome-icon">✚</div>
+      <div>
         <h2>Your healthcare, in one place</h2>
-        <p>Find a doctor and manage your appointments.</p>
+        <p>Find the right doctor and stay on top of your care.</p>
+      </div>
+    </div>
 
-        <a class="dashboard-link" routerLink="/patient/doctors">
-            Find a doctor →
-        </a>
+    <div class="dashboard-actions">
+      <a class="action-card" routerLink="/patient/doctors">
+        <span class="action-icon">⌕</span>
+        <span class="action-text">
+          <strong>Find a doctor</strong>
+          <small>Browse specialists and book an appointment.</small>
+        </span>
+        <span class="action-arrow">→</span>
+      </a>
 
-        <p class="coming-soon">Appointment booking is coming next.</p>
-        </section>
-      }
+      <a class="action-card" routerLink="/patient/appointments">
+        <span class="action-icon">▦</span>
+        <span class="action-text">
+          <strong>My appointments</strong>
+          <small>View upcoming visits and manage bookings.</small>
+        </span>
+        <span class="action-arrow">→</span>
+      </a>
+    </div>
+  </section>
+}
+
 
       @if (user.role === 'DOCTOR') {
         <section class="welcome-card">

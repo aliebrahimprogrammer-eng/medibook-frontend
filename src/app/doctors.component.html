@@ -108,13 +108,11 @@
             </div>
 
             <button
-              class="book-button"
-              type="button"
-              (click)="loadDoctors()"
-              disabled
-              title="Appointment booking will be implemented next"
-            >
-              Booking coming next
+                class="book-button"
+                type="button"
+                [routerLink]="['/patient/book', doctor.id]"
+                >
+                Book appointment
             </button>
           </article>
         }
