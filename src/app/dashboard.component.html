@@ -54,13 +54,18 @@
 }
 
 
-      @if (user.role === 'DOCTOR') {
-        <section class="welcome-card">
-          <h2>Your doctor workspace</h2>
-          <p>Manage availability and review your appointments.</p>
-          <p class="coming-soon">Doctor features are coming next.</p>
-        </section>
-      }
+     @if (user.role === 'DOCTOR') {
+  <section class="welcome-card">
+    <h2>Your doctor workspace</h2>
+    <p>Review your schedule and manage patient appointments.</p>
+
+    <a class="dashboard-link" routerLink="/doctor/appointments">
+      View my appointments →
+    </a>
+
+    <p class="coming-soon">Availability management is coming next.</p>
+  </section>
+}
 
       @if (user.role === 'ADMIN') {
         <section class="welcome-card">

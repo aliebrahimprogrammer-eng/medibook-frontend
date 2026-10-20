@@ -7,6 +7,7 @@ import { DoctorsComponent } from './doctors.component';
 import { BookingComponent } from './booking.component';
 import { roleGuard } from './auth.guard';
 import { MyAppointmentsComponent } from './my-appointments.component';
+import { DoctorAppointmentsComponent } from './doctor-appointments.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,12 @@ export const routes: Routes = [
     canActivate: [roleGuard],
     data: { roles: ['DOCTOR'] },
   },
+  {
+  path: 'doctor/appointments',
+  component: DoctorAppointmentsComponent,
+  canActivate: [roleGuard],
+  data: { roles: ['DOCTOR'] },
+},
   {
     path: 'admin',
     component: DashboardComponent,
