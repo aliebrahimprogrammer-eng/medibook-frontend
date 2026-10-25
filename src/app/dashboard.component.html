@@ -84,13 +84,30 @@
         </section>
       }
 
-      @if (user.role === 'ADMIN') {
-        <section class="welcome-card">
-          <h2>Administration</h2>
-          <p>Manage users and review system activity.</p>
-          <p class="coming-soon">Admin features are coming next.</p>
-        </section>
-      }
+     
+@if (user.role === 'ADMIN') {
+  <section class="welcome-card">
+    <div class="welcome-heading">
+      <div class="welcome-icon">⚙</div>
+      <div>
+        <h2>Administration</h2>
+        <p>Manage MediBook accounts and monitor access to the system.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-actions">
+      <a class="action-card" routerLink="/admin/users">
+        <span class="action-icon">♙</span>
+        <span class="action-text">
+          <strong>User management</strong>
+          <small>View users, update roles, and manage account status.</small>
+        </span>
+        <span class="action-arrow">→</span>
+      </a>
+    </div>
+  </section>
+}
+
     } @else {
       <p role="alert">{{ errorMessage() }}</p>
 
