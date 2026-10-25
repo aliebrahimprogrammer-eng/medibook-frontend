@@ -10,6 +10,7 @@ import { DoctorAppointmentsComponent } from './doctor-appointments.component';
 import { DoctorAvailabilityComponent } from './doctor-availability.component';
 import { AdminUsersComponent } from './admin-users.component';
 import { AdminAuditLogsComponent } from './admin-audit-logs.component';
+import { AdminCreateDoctorComponent } from './admin-create-doctor.component';
 import { MyProfileComponent } from './my-profile.component';
 import { roleGuard } from './auth.guard';
 
@@ -17,6 +18,12 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'profile',
+    component: MyProfileComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['PATIENT', 'DOCTOR', 'ADMIN'] },
   },
   {
     path: 'patient/doctors',
@@ -61,29 +68,29 @@ export const routes: Routes = [
     data: { roles: ['DOCTOR'] },
   },
   {
-  path: 'admin/users',
-  component: AdminUsersComponent,
-  canActivate: [roleGuard],
-  data: { roles: ['ADMIN'] },
-},
-{
-  path: 'admin/audit-logs',
-  component: AdminAuditLogsComponent,
-  canActivate: [roleGuard],
-  data: { roles: ['ADMIN'] },
-},
+    path: 'admin/users',
+    component: AdminUsersComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['ADMIN'] },
+  },
+  {
+    path: 'admin/audit-logs',
+    component: AdminAuditLogsComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['ADMIN'] },
+  },
+  {
+    path: 'admin/create-doctor',
+    component: AdminCreateDoctorComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['ADMIN'] },
+  },
   {
     path: 'admin',
     component: DashboardComponent,
     canActivate: [roleGuard],
     data: { roles: ['ADMIN'] },
   },
-  {
-  path: 'profile',
-  component: MyProfileComponent,
-  canActivate: [roleGuard],
-  data: { roles: ['PATIENT', 'DOCTOR', 'ADMIN'] },
-},
   {
     path: '',
     redirectTo: 'login',
