@@ -20,52 +20,69 @@
       <h1>Welcome back, {{ user.firstName }}!</h1>
       <p class="subtitle">Signed in as {{ user.email }}.</p>
 
-    
-@if (user.role === 'PATIENT') {
-  <section class="welcome-card">
-    <div class="welcome-heading">
-      <div class="welcome-icon">✚</div>
-      <div>
-        <h2>Your healthcare, in one place</h2>
-        <p>Find the right doctor and stay on top of your care.</p>
-      </div>
-    </div>
+      @if (user.role === 'PATIENT') {
+        <section class="welcome-card">
+          <div class="welcome-heading">
+            <div class="welcome-icon">✚</div>
+            <div>
+              <h2>Your healthcare, in one place</h2>
+              <p>Find the right doctor and stay on top of your care.</p>
+            </div>
+          </div>
 
-    <div class="dashboard-actions">
-      <a class="action-card" routerLink="/patient/doctors">
-        <span class="action-icon">⌕</span>
-        <span class="action-text">
-          <strong>Find a doctor</strong>
-          <small>Browse specialists and book an appointment.</small>
-        </span>
-        <span class="action-arrow">→</span>
-      </a>
+          <div class="dashboard-actions">
+            <a class="action-card" routerLink="/patient/doctors">
+              <span class="action-icon">⌕</span>
+              <span class="action-text">
+                <strong>Find a doctor</strong>
+                <small>Browse specialists and book an appointment.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
 
-      <a class="action-card" routerLink="/patient/appointments">
-        <span class="action-icon">▦</span>
-        <span class="action-text">
-          <strong>My appointments</strong>
-          <small>View upcoming visits and manage bookings.</small>
-        </span>
-        <span class="action-arrow">→</span>
-      </a>
-    </div>
-  </section>
-}
+            <a class="action-card" routerLink="/patient/appointments">
+              <span class="action-icon">▦</span>
+              <span class="action-text">
+                <strong>My appointments</strong>
+                <small>View upcoming visits and manage bookings.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
+          </div>
+        </section>
+      }
 
+      @if (user.role === 'DOCTOR') {
+        <section class="welcome-card">
+          <div class="welcome-heading">
+            <div class="welcome-icon">✚</div>
+            <div>
+              <h2>Your doctor workspace</h2>
+              <p>Manage your availability and patient appointments.</p>
+            </div>
+          </div>
 
-     @if (user.role === 'DOCTOR') {
-  <section class="welcome-card">
-    <h2>Your doctor workspace</h2>
-    <p>Review your schedule and manage patient appointments.</p>
+          <div class="dashboard-actions">
+            <a class="action-card" routerLink="/doctor/appointments">
+              <span class="action-icon">▦</span>
+              <span class="action-text">
+                <strong>My appointments</strong>
+                <small>Review appointments and manage their status.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
 
-    <a class="dashboard-link" routerLink="/doctor/appointments">
-      View my appointments →
-    </a>
-
-    <p class="coming-soon">Availability management is coming next.</p>
-  </section>
-}
+            <a class="action-card" routerLink="/doctor/availability">
+              <span class="action-icon">◷</span>
+              <span class="action-text">
+                <strong>Manage availability</strong>
+                <small>Create and delete the time slots patients can book.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
+          </div>
+        </section>
+      }
 
       @if (user.role === 'ADMIN') {
         <section class="welcome-card">
@@ -76,6 +93,7 @@
       }
     } @else {
       <p role="alert">{{ errorMessage() }}</p>
+
       <button class="logout-button" type="button" (click)="logout()">
         Return to login
       </button>
