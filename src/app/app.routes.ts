@@ -10,6 +10,7 @@ import { DoctorAppointmentsComponent } from './doctor-appointments.component';
 import { DoctorAvailabilityComponent } from './doctor-availability.component';
 import { AdminUsersComponent } from './admin-users.component';
 import { AdminAuditLogsComponent } from './admin-audit-logs.component';
+import { MyProfileComponent } from './my-profile.component';
 import { roleGuard } from './auth.guard';
 
 export const routes: Routes = [
@@ -77,6 +78,12 @@ export const routes: Routes = [
     canActivate: [roleGuard],
     data: { roles: ['ADMIN'] },
   },
+  {
+  path: 'profile',
+  component: MyProfileComponent,
+  canActivate: [roleGuard],
+  data: { roles: ['PATIENT', 'DOCTOR', 'ADMIN'] },
+},
   {
     path: '',
     redirectTo: 'login',

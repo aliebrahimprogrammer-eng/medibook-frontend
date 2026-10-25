@@ -15,6 +15,12 @@ export interface UserProfile {
   profilePictureUrl?: string;
 }
 
+export interface ProfileUpdateRequest {
+  firstName: string;
+  lastName: string;
+  phone: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,5 +30,21 @@ export class ProfileService {
 
   getMyProfile(): Observable<UserProfile> {
     return this.http.get<UserProfile>(this.apiUrl);
+  }
+
+  updateMyProfile(
+    request: ProfileUpdateRequest,
+  ): Observable<UserProfile> {
+    return this.http.put<UserProfile>(this.apiUrl, request);
+  }
+
+  uploadProfilePicture(file: File): Observable<UserProfile> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<UserProfile>(
+      `${this.apiUrl}/picture`,
+      formData,
+    );
   }
 }
