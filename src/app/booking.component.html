@@ -1,3 +1,4 @@
+
 <div class="booking-page">
   <header class="topbar">
     <a class="brand" routerLink="/patient">
@@ -20,6 +21,7 @@
           Dr. {{ currentDoctor.firstName }}
           {{ currentDoctor.lastName }}
         </h2>
+
         <p>{{ currentDoctor.specializationName }}</p>
 
         @if (currentDoctor.bio) {
@@ -41,6 +43,46 @@
         <p class="success-message" role="status">
           {{ successMessage() }}
         </p>
+      }
+
+      @if (showWaitlistPrompt()) {
+        <section class="waitlist-prompt" role="alert">
+          <h2>This appointment is already booked</h2>
+
+          <p>
+            Another patient has booked this time. Would you like
+            to join the waitlist for your preferred appointment
+            time?
+          </p>
+
+          <p>
+            If a suitable appointment becomes available, your
+            waitlist request can be considered by the system.
+          </p>
+
+          <div class="waitlist-actions">
+            <button
+              type="button"
+              class="join-waitlist-button"
+              [disabled]="isJoiningWaitlist()"
+              (click)="joinWaitlist()"
+            >
+              {{
+                isJoiningWaitlist()
+                  ? 'Joining...'
+                  : 'Yes, Join Waitlist'
+              }}
+            </button>
+
+            <button
+              type="button"
+              class="choose-another-button"
+              (click)="dismissWaitlistPrompt()"
+            >
+              Choose Another Slot
+            </button>
+          </div>
+        </section>
       }
 
       @if (availableDates().length === 0) {
@@ -88,6 +130,7 @@
                 id="appointment-time"
                 name="appointmentTime"
                 [(ngModel)]="selectedSlotId"
+                (ngModelChange)="onSlotChange()"
                 required
               >
                 <option value="">Choose a time</option>
@@ -132,6 +175,7 @@
             class="book-button"
             [disabled]="
               isBooking() ||
+              isJoiningWaitlist() ||
               !selectedDate ||
               !selectedSlotId
             "

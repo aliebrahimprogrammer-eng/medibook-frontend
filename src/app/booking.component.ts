@@ -1,3 +1,4 @@
+
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -18,6 +19,8 @@ import {
   Doctor,
 } from './services/doctor.service';
 
+import { WaitlistService } from './services/waitlist.service';
+
 interface AppointmentSlot {
   id: string;
   startDateTime: string;
@@ -36,6 +39,7 @@ export class BookingComponent implements OnInit {
   private readonly doctorService = inject(DoctorService);
   private readonly availabilityService = inject(AvailabilityService);
   private readonly appointmentService = inject(AppointmentService);
+  private readonly waitlistService = inject(WaitlistService);
 
   doctor = signal<Doctor | null>(null);
   appointmentSlots = signal<AppointmentSlot[]>([]);
@@ -47,8 +51,11 @@ export class BookingComponent implements OnInit {
 
   isLoading = signal(true);
   isBooking = signal(false);
+  isJoiningWaitlist = signal(false);
+
   errorMessage = signal('');
   successMessage = signal('');
+  showWaitlistPrompt = signal(false);
 
   ngOnInit(): void {
     const doctorId = Number(
@@ -104,9 +111,11 @@ export class BookingComponent implements OnInit {
         },
         error: (error) => {
           console.error('Availability error:', error);
+
           this.errorMessage.set(
             'Could not load availability. Please try again.',
           );
+
           this.isLoading.set(false);
         },
       });
@@ -141,13 +150,10 @@ export class BookingComponent implements OnInit {
       const end = start + duration;
 
       if (start > now) {
-        const startDateTime = new Date(start).toISOString();
-        const endDateTime = new Date(end).toISOString();
-
         output.push({
           id: `${availability.id}-${start}`,
-          startDateTime,
-          endDateTime,
+          startDateTime: new Date(start).toISOString(),
+          endDateTime: new Date(end).toISOString(),
         });
       }
 
@@ -166,6 +172,13 @@ export class BookingComponent implements OnInit {
 
   onDateChange(): void {
     this.selectedSlotId = '';
+    this.errorMessage.set('');
+    this.successMessage.set('');
+    this.showWaitlistPrompt.set(false);
+  }
+
+  onSlotChange(): void {
+    this.showWaitlistPrompt.set(false);
     this.errorMessage.set('');
     this.successMessage.set('');
   }
@@ -205,6 +218,7 @@ export class BookingComponent implements OnInit {
     this.isBooking.set(true);
     this.errorMessage.set('');
     this.successMessage.set('');
+    this.showWaitlistPrompt.set(false);
 
     this.appointmentService
       .createAppointment({
@@ -242,17 +256,103 @@ export class BookingComponent implements OnInit {
             this.selectedDate = '';
           }
         },
+
         error: (error) => {
           this.isBooking.set(false);
 
           console.error('Booking error:', error);
 
+          const backendMessage = error.error?.message;
+
+          if (
+            error.status === 409 &&
+            backendMessage ===
+              'Doctor already has an appointment during this time'
+          ) {
+            this.errorMessage.set('');
+            this.successMessage.set('');
+            this.showWaitlistPrompt.set(true);
+            return;
+          }
+
+          this.showWaitlistPrompt.set(false);
+
           this.errorMessage.set(
             error.status === 409
-              ? 'This slot is no longer available. Please choose another.'
+              ? backendMessage ||
+                  'The appointment could not be booked because of a conflict.'
               : `Booking failed (HTTP ${error.status}). Please try again.`,
           );
         },
       });
+  }
+
+  joinWaitlist(): void {
+    const doctor = this.doctor();
+
+    const slot = this.slotsForSelectedDate().find(
+      (item) => item.id === this.selectedSlotId,
+    );
+
+    if (!doctor || !slot || this.isJoiningWaitlist()) {
+      return;
+    }
+
+    this.isJoiningWaitlist.set(true);
+    this.errorMessage.set('');
+    this.successMessage.set('');
+
+    this.waitlistService
+      .joinWaitlist({
+        doctorId: doctor.id,
+        preferredStartDateTime: slot.startDateTime,
+        preferredEndDateTime: slot.endDateTime,
+      })
+      .subscribe({
+        next: () => {
+          this.isJoiningWaitlist.set(false);
+          this.showWaitlistPrompt.set(false);
+
+          this.successMessage.set(
+            'You have successfully joined the waitlist for your selected appointment time.',
+          );
+
+          this.appointmentSlots.update((slots) =>
+            slots.filter((item) => item.id !== slot.id),
+          );
+
+          const remainingDates = [
+            ...new Set(
+              this.appointmentSlots().map((item) =>
+                this.getDateKey(item.startDateTime),
+              ),
+            ),
+          ].sort();
+
+          this.availableDates.set(remainingDates);
+
+          if (!remainingDates.includes(this.selectedDate)) {
+            this.selectedDate = '';
+          }
+
+          this.selectedSlotId = '';
+        },
+
+        error: (error) => {
+          console.error('Failed to join waitlist:', error);
+
+          this.isJoiningWaitlist.set(false);
+
+          this.errorMessage.set(
+            error.error?.message ||
+              'Could not join the waitlist. Please try again.',
+          );
+        },
+      });
+  }
+
+  dismissWaitlistPrompt(): void {
+    this.showWaitlistPrompt.set(false);
+    this.errorMessage.set('');
   }
 }
