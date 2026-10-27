@@ -6,7 +6,11 @@
       MediBook
     </a>
 
-    <button class="logout-button" type="button" (click)="logout()">
+    <button
+      class="logout-button"
+      type="button"
+      (click)="logout()"
+    >
       Sign out
     </button>
   </header>
@@ -49,14 +53,23 @@
               <span class="action-arrow">→</span>
             </a>
 
+            <a class="action-card" routerLink="/patient/waitlist">
+              <span class="action-icon">◷</span>
+              <span class="action-text">
+                <strong>My Waitlist</strong>
+                <small>View your waitlist requests and cancel requests you no longer need.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
+
             <a class="action-card" routerLink="/profile">
-  <span class="action-icon">♙</span>
-  <span class="action-text">
-    <strong>My Profile</strong>
-    <small>Update your personal details and profile picture.</small>
-  </span>
-  <span class="action-arrow">→</span>
-</a>
+              <span class="action-icon">♙</span>
+              <span class="action-text">
+                <strong>My Profile</strong>
+                <small>Update your personal details and profile picture.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
           </div>
         </section>
       }
@@ -91,76 +104,74 @@
             </a>
 
             <a class="action-card" routerLink="/profile">
-  <span class="action-icon">♙</span>
-  <span class="action-text">
-    <strong>My Profile</strong>
-    <small>Update your personal details and profile picture.</small>
-  </span>
-  <span class="action-arrow">→</span>
-</a>
+              <span class="action-icon">♙</span>
+              <span class="action-text">
+                <strong>My Profile</strong>
+                <small>Update your personal details and profile picture.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
           </div>
         </section>
       }
 
-     
-@if (user.role === 'ADMIN') {
-  <section class="welcome-card">
-    <div class="welcome-heading">
-      <div class="welcome-icon">⚙</div>
-      <div>
-        <h2>Administration</h2>
-        <p>Manage MediBook accounts and monitor access to the system.</p>
-      </div>
-    </div>
+      @if (user.role === 'ADMIN') {
+        <section class="welcome-card">
+          <div class="welcome-heading">
+            <div class="welcome-icon">⚙</div>
+            <div>
+              <h2>Administration</h2>
+              <p>Manage MediBook accounts and monitor access to the system.</p>
+            </div>
+          </div>
 
-    <div class="dashboard-actions">
-      <a class="action-card" routerLink="/admin/users">
-        <span class="action-icon">♙</span>
-        <span class="action-text">
-          <strong>User management</strong>
-          <small>View users, update roles, and manage account status.</small>
-        </span>
-        <span class="action-arrow">→</span>
-      </a>
+          <div class="dashboard-actions">
+            <a class="action-card" routerLink="/admin/users">
+              <span class="action-icon">♙</span>
+              <span class="action-text">
+                <strong>User management</strong>
+                <small>View users, update roles, and manage account status.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
 
-      
-<a class="action-card" routerLink="/admin/create-doctor">
-  <span class="action-icon">✚</span>
-  <span class="action-text">
-    <strong>Create Doctor</strong>
-    <small>Set up a doctor profile for an existing doctor account.</small>
-  </span>
-  <span class="action-arrow">→</span>
-</a>
+            <a class="action-card" routerLink="/admin/create-doctor">
+              <span class="action-icon">✚</span>
+              <span class="action-text">
+                <strong>Create Doctor</strong>
+                <small>Set up a doctor profile for an existing doctor account.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
 
+            <a class="action-card" routerLink="/admin/audit-logs">
+              <span class="action-icon">↻</span>
+              <span class="action-text">
+                <strong>Audit logs</strong>
+                <small>Review system activity, user actions, and administrative changes.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
 
-      
-<a class="action-card" routerLink="/admin/audit-logs">
-  <span class="action-icon">↻</span>
-  <span class="action-text">
-    <strong>Audit logs</strong>
-    <small>Review system activity, user actions, and administrative changes.</small>
-  </span>
-  <span class="action-arrow">→</span>
-</a>
-
-<a class="action-card" routerLink="/profile">
-  <span class="action-icon">♙</span>
-  <span class="action-text">
-    <strong>My Profile</strong>
-    <small>Update your personal details and profile picture.</small>
-  </span>
-  <span class="action-arrow">→</span>
-</a>
-
-    </div>
-  </section>
-}
-
+            <a class="action-card" routerLink="/profile">
+              <span class="action-icon">♙</span>
+              <span class="action-text">
+                <strong>My Profile</strong>
+                <small>Update your personal details and profile picture.</small>
+              </span>
+              <span class="action-arrow">→</span>
+            </a>
+          </div>
+        </section>
+      }
     } @else {
       <p role="alert">{{ errorMessage() }}</p>
 
-      <button class="logout-button" type="button" (click)="logout()">
+      <button
+        class="logout-button"
+        type="button"
+        (click)="logout()"
+      >
         Return to login
       </button>
     }

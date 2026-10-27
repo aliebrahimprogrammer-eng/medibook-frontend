@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard.component';
 import { DoctorsComponent } from './doctors.component';
 import { BookingComponent } from './booking.component';
 import { MyAppointmentsComponent } from './my-appointments.component';
+import { MyWaitlistComponent } from './my-waitlist.component';
 import { DoctorAppointmentsComponent } from './doctor-appointments.component';
 import { DoctorAvailabilityComponent } from './doctor-availability.component';
 import { AdminUsersComponent } from './admin-users.component';
@@ -40,6 +41,12 @@ export const routes: Routes = [
   {
     path: 'patient/appointments',
     component: MyAppointmentsComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['PATIENT'] },
+  },
+  {
+    path: 'patient/waitlist',
+    component: MyWaitlistComponent,
     canActivate: [roleGuard],
     data: { roles: ['PATIENT'] },
   },
