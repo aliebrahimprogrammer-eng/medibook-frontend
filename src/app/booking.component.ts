@@ -126,6 +126,9 @@ export class BookingComponent implements OnInit {
     now: number,
     output: AppointmentSlot[],
   ): void {
+    // These values are LocalDateTime strings without a timezone.
+    // Parse them as browser-local wall-clock times, then keep the
+    // generated slot strings timezone-free when sending to Java.
     const availabilityStart = new Date(
       availability.startDateTime,
     ).getTime();
@@ -152,8 +155,8 @@ export class BookingComponent implements OnInit {
       if (start > now) {
         output.push({
           id: `${availability.id}-${start}`,
-          startDateTime: new Date(start).toISOString(),
-          endDateTime: new Date(end).toISOString(),
+          startDateTime: this.toLocalDateTimeString(new Date(start)),
+          endDateTime: this.toLocalDateTimeString(new Date(end)),
         });
       }
 
@@ -161,13 +164,18 @@ export class BookingComponent implements OnInit {
     }
   }
 
-  private getDateKey(dateTime: string): string {
-    const date = new Date(dateTime);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+  private toLocalDateTimeString(date: Date): string {
+    const pad = (value: number) => String(value).padStart(2, '0');
 
-    return `${year}-${month}-${day}`;
+    return (
+      `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
+      `T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
+    );
+  }
+
+  private getDateKey(dateTime: string): string {
+    // The date portion is already the intended local calendar date.
+    return dateTime.slice(0, 10);
   }
 
   onDateChange(): void {
