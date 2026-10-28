@@ -10,11 +10,13 @@ export interface AppointmentRequest {
   reason?: string;
 }
 
+
 export interface AppointmentResponse {
   id: number;
   patientId: number;
   doctorId: number;
   doctorName: string;
+  patientName: string;
   startDateTime: string;
   endDateTime: string;
   status: 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';

@@ -17,6 +17,7 @@ export interface WaitlistEntry {
   id: number;
   patientId: number;
   doctorId: number;
+  doctorName: string;
   preferredStartDateTime: string;
   preferredEndDateTime: string;
   status: WaitlistStatus;
